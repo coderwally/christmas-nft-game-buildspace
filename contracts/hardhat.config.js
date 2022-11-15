@@ -3,6 +3,7 @@ require("dotenv").config({ path: ".env" });
 
 const ALCHEMY_GOERLI_API_KEY_URL = process.env.ALCHEMY_GOERLI_API_KEY_URL;
 const ALCHEMY_MUMBAI_API_KEY_URL = process.env.ALCHEMY_MUMBAI_API_KEY_URL;
+const QUICKNODE_AVAX_FUJI_URL = process.env.QUICKNODE_AVAX_FUJI_URL;
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY;
 const POLYGONSCAN_API_KEY = process.env.POLYGONSCAN_API_KEY;
@@ -18,8 +19,11 @@ module.exports = {
     mumbai: {
       url: ALCHEMY_MUMBAI_API_KEY_URL,
       accounts: [PRIVATE_KEY],
-    }
-  },  
+    },
+    fuji: {
+      url: QUICKNODE_AVAX_FUJI_URL,
+      accounts: [PRIVATE_KEY],
+    }  },  
   etherscan: {
     apiKey: POLYGONSCAN_API_KEY,
   },    
