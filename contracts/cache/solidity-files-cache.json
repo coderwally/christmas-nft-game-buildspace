@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "E:\\dev\\buildspace\\christmas-nft-game\\contracts\\contracts\\ChristmasGame.sol": {
-      "lastModificationDate": 1668463772288,
-      "contentHash": "2262da9e88dc51295166cc1d6c9f4d6a",
+      "lastModificationDate": 1668474436685,
+      "contentHash": "52f8f6be2e985f1e6e2d26038847c7f8",
       "sourceName": "contracts/ChristmasGame.sol",
       "solcConfig": {
         "version": "0.8.17",
