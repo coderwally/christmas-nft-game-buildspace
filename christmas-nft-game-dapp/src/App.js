@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import twitterLogo from "./assets/twitter-logo.svg";
 import "./App.css";
 import SelectCharacter from './Components/SelectCharacter';
-import { CONTRACT_ADDRESS } from './constants';
+import { CONTRACT_ADDRESS, transformCharacterData } from './constants';
+import christmasGameContract from './utils/ChristmasGame.json';
 import { ethers } from 'ethers';
 
 // Constants
@@ -13,6 +14,7 @@ const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
 const App = () => {
   const [currentAccount, setCurrentAccount] = useState(null);
   const [characterNFT, setCharacterNFT] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);  
 
   /*
    * Since this method will take some time, make sure to declare it as async
@@ -67,10 +69,49 @@ const App = () => {
       console.log(error);
     }
   };
+  const checkNetwork = async () => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const { chainId } = await provider.getNetwork();
 
+    try { 
+      if (chainId !== 80001) {
+        alert("Please connect to Polygon Mumbai!")
+      }
+    } catch(error) {
+      console.log(error)
+    }
+  }
   useEffect(() => {
+    setIsLoading(true);
+    checkNetwork();
     checkIfWalletIsConnected();
   }, []);
+
+  useEffect(() => {
+    const fetchNFTMetadata = async () => {
+        console.log("Checking for Character NFT on address:", currentAccount);
+
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+        const gameContract = new ethers.Contract(CONTRACT_ADDRESS, christmasGameContract.abi, signer);
+
+        const characterNFT = await gameContract.checkIfUserHasNFT();
+        if (characterNFT.name) {
+            console.log("User has character NFT");
+            setCharacterNFT(transformCharacterData(characterNFT));
+        }
+
+        /*
+         * Once we are done with all the fetching, set loading state to false
+         */
+        setIsLoading(false);
+    };
+
+    if (currentAccount) {
+        console.log("CurrentAccount:", currentAccount);
+        fetchNFTMetadata();
+    }
+}, [currentAccount]);
 
   const renderDebugData = () => {
     return (
@@ -106,6 +147,13 @@ const App = () => {
        */
     } else if (currentAccount && !characterNFT) {
       return <SelectCharacter setCharacterNFT={setCharacterNFT} />;
+    } else if (currentAccount && characterNFT) {
+      return (
+        <>
+          <h5 className="sub-text">CHARACTER ALREADY MINTED</h5>
+          <SelectCharacter setCharacterNFT={setCharacterNFT} />
+        </>
+      );
     }
   };  
 
