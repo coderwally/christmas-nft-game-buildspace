@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
 import twitterLogo from "./assets/twitter-logo.svg";
 import "./App.css";
+import SelectCharacter from './Components/SelectCharacter';
+import { CONTRACT_ADDRESS } from './constants';
+import { ethers } from 'ethers';
 
 // Constants
 const TWITTER_HANDLE = "_buildspace";
 const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
 
+
 const App = () => {
   const [currentAccount, setCurrentAccount] = useState(null);
+  const [characterNFT, setCharacterNFT] = useState(null);
 
   /*
    * Since this method will take some time, make sure to declare it as async
@@ -67,13 +72,50 @@ const App = () => {
     checkIfWalletIsConnected();
   }, []);
 
+  const renderDebugData = () => {
+    return (
+      <>
+        <h4>CONTRACT_ADDRESS: {CONTRACT_ADDRESS}</h4>
+      </>
+    );
+  }
+
+  const renderContent = () => {
+    /*
+     * Scenario #1
+     */
+    if (!currentAccount) {
+      return (
+        <div className="connect-wallet-container">
+          <img
+              src="https://media.giphy.com/media/Gpi6b9M5Sz62RM6uLZ/giphy.gif"
+              alt="Christmas Dog Gif"
+          />
+          <button
+            className="cta-button connect-wallet-button"
+            onClick={connectWalletAction}
+          >
+            Connect Wallet To Get Started
+          </button>
+
+          
+        </div>
+      );
+      /*
+       * Scenario #2
+       */
+    } else if (currentAccount && !characterNFT) {
+      return <SelectCharacter setCharacterNFT={setCharacterNFT} />;
+    }
+  };  
+
   return (
     <div className="App">
       <div className="container">
         <div className="header-container">
           <p className="header gradient-text">🎄 Christmas Joy Spreader 🎄</p>
           <p className="sub-text">Team up to spread joy!!</p>
-          <div className="connect-wallet-container">
+          {/* <div className="connect-wallet-container">
             <img
               src="https://media.giphy.com/media/Gpi6b9M5Sz62RM6uLZ/giphy.gif"
               alt="Christmas Dog Gif"
@@ -84,6 +126,10 @@ const App = () => {
             >
               Connect Wallet To Get Started
             </button>           
+          </div> */}
+          {renderContent()}
+          <div className="debug-data">
+            {renderDebugData()}
           </div>
         </div>
         <div className="footer-container">
