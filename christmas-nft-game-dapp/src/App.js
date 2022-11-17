@@ -1,24 +1,21 @@
 import React, { useEffect, useState } from "react";
 import twitterLogo from "./assets/twitter-logo.svg";
 import "./App.css";
-import SelectCharacter from './Components/SelectCharacter';
-import { CONTRACT_ADDRESS, transformCharacterData } from './constants';
-import christmasGameContract from './utils/ChristmasGame.json';
-import { ethers } from 'ethers';
+import SelectCharacter from "./Components/SelectCharacter";
+import { CONTRACT_ADDRESS, transformCharacterData } from "./constants";
+import christmasGameContract from "./utils/ChristmasGame.json";
+import { ethers } from "ethers";
+import Arena from "./Components/Arena";
+import LoadingIndicator from "./Components/LoadingIndicator";
 
-// Constants
 const TWITTER_HANDLE = "_buildspace";
 const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
-
 
 const App = () => {
   const [currentAccount, setCurrentAccount] = useState(null);
   const [characterNFT, setCharacterNFT] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);  
+  const [isLoading, setIsLoading] = useState(false);
 
-  /*
-   * Since this method will take some time, make sure to declare it as async
-   */
   const checkIfWalletIsConnected = async () => {
     try {
       const { ethereum } = window;
@@ -29,14 +26,8 @@ const App = () => {
       } else {
         console.log("We have the ethereum object", ethereum);
 
-        /*
-         * Check if we're authorized to access the user's wallet
-         */
         const accounts = await ethereum.request({ method: "eth_accounts" });
 
-        /*
-         * User can have multiple authorized accounts, we grab the first one if its there!
-         */
         if (accounts.length !== 0) {
           const account = accounts[0];
           console.log("Found an authorized account:", account);
@@ -48,6 +39,8 @@ const App = () => {
     } catch (error) {
       console.log(error);
     }
+
+    setIsLoading(false);
   };
 
   const connectWalletAction = async () => {
@@ -73,14 +66,14 @@ const App = () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const { chainId } = await provider.getNetwork();
 
-    try { 
+    try {
       if (chainId !== 80001) {
-        alert("Please connect to Polygon Mumbai!")
+        alert("Please connect to Polygon Mumbai!");
       }
-    } catch(error) {
-      console.log(error)
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
   useEffect(() => {
     setIsLoading(true);
     checkNetwork();
@@ -89,36 +82,36 @@ const App = () => {
 
   useEffect(() => {
     const fetchNFTMetadata = async () => {
-        console.log("Checking for Character NFT on address:", currentAccount);
+      console.log("Checking for Character NFT on address:", currentAccount);
 
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        const signer = provider.getSigner();
-        const gameContract = new ethers.Contract(CONTRACT_ADDRESS, christmasGameContract.abi, signer);
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const gameContract = new ethers.Contract(
+        CONTRACT_ADDRESS,
+        christmasGameContract.abi,
+        signer
+      );
 
-        const characterNFT = await gameContract.checkIfUserHasNFT();
-        if (characterNFT.name) {
-            console.log("User has character NFT");
-            setCharacterNFT(transformCharacterData(characterNFT));
-        }
+      const characterNFT = await gameContract.checkIfUserHasNFT();
+      if (characterNFT.name) {
+        console.log("User has character NFT");
+        setCharacterNFT(transformCharacterData(characterNFT));
+      }
 
-        setIsLoading(false);
+      setIsLoading(false);
     };
 
     if (currentAccount) {
-        console.log("CurrentAccount:", currentAccount);
-        fetchNFTMetadata();
+      console.log("CurrentAccount:", currentAccount);
+      fetchNFTMetadata();
     }
-}, [currentAccount]);
-
-  const renderDebugData = () => {
-    return (
-      <>
-        <h4>CONTRACT_ADDRESS: {CONTRACT_ADDRESS}</h4>
-      </>
-    );
-  }
+  }, [currentAccount]);
 
   const renderContent = () => {
+    if (isLoading) {
+      return <LoadingIndicator />;
+    }
+
     /*
      * Scenario #1
      */
@@ -126,8 +119,8 @@ const App = () => {
       return (
         <div className="connect-wallet-container">
           <img
-              src="https://media.giphy.com/media/Gpi6b9M5Sz62RM6uLZ/giphy.gif"
-              alt="Christmas Dog Gif"
+            src="https://media.giphy.com/media/Gpi6b9M5Sz62RM6uLZ/giphy.gif"
+            alt="Christmas Dog Gif"
           />
           <button
             className="cta-button connect-wallet-button"
@@ -135,8 +128,6 @@ const App = () => {
           >
             Connect Wallet To Get Started
           </button>
-
-          
         </div>
       );
       /*
@@ -146,12 +137,10 @@ const App = () => {
       return <SelectCharacter setCharacterNFT={setCharacterNFT} />;
     } else if (currentAccount && characterNFT) {
       return (
-        <>
-          <SelectCharacter setCharacterNFT={setCharacterNFT} />
-        </>
+        <Arena characterNFT={characterNFT} setCharacterNFT={setCharacterNFT} />
       );
     }
-  };  
+  };
 
   return (
     <div className="App">
@@ -160,9 +149,6 @@ const App = () => {
           <p className="header gradient-text">🎄 Christmas Joy Spreader 🎄</p>
           <p className="sub-text">Team up to spread joy!!</p>
           {renderContent()}
-          {/* <div className="debug-data">
-            {renderDebugData()}
-          </div> */}
         </div>
         <div className="footer-container">
           <img alt="Twitter Logo" className="twitter-logo" src={twitterLogo} />
