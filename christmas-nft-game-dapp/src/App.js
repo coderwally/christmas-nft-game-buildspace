@@ -101,9 +101,6 @@ const App = () => {
             setCharacterNFT(transformCharacterData(characterNFT));
         }
 
-        /*
-         * Once we are done with all the fetching, set loading state to false
-         */
         setIsLoading(false);
     };
 
@@ -150,7 +147,6 @@ const App = () => {
     } else if (currentAccount && characterNFT) {
       return (
         <>
-          <h5 className="sub-text">CHARACTER ALREADY MINTED</h5>
           <SelectCharacter setCharacterNFT={setCharacterNFT} />
         </>
       );
@@ -163,22 +159,10 @@ const App = () => {
         <div className="header-container">
           <p className="header gradient-text">🎄 Christmas Joy Spreader 🎄</p>
           <p className="sub-text">Team up to spread joy!!</p>
-          {/* <div className="connect-wallet-container">
-            <img
-              src="https://media.giphy.com/media/Gpi6b9M5Sz62RM6uLZ/giphy.gif"
-              alt="Christmas Dog Gif"
-            />
-            <button
-              className="cta-button connect-wallet-button"
-              onClick={connectWalletAction}
-            >
-              Connect Wallet To Get Started
-            </button>           
-          </div> */}
           {renderContent()}
-          <div className="debug-data">
+          {/* <div className="debug-data">
             {renderDebugData()}
-          </div>
+          </div> */}
         </div>
         <div className="footer-container">
           <img alt="Twitter Logo" className="twitter-logo" src={twitterLogo} />
