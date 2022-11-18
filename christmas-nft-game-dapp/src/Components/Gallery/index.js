@@ -5,6 +5,7 @@ import christmasGame from "../../utils/ChristmasGame.json";
 import "./Gallery.css";
 
 import uuid from 'react-uuid'
+import { isAddress } from "ethers/lib/utils";
 //import LoadingIndicator from "../LoadingIndicator";
 
 const Gallery = () => {
@@ -28,7 +29,7 @@ const Gallery = () => {
         christmasGame.abi,
         signer
       );
-      
+
     } else {
       console.log("Ethereum object not found");
     }
@@ -45,7 +46,7 @@ const Gallery = () => {
           console.log('HOLDERS2');
           console.log(response[0]);
           console.log(response[1]);
-  
+
           setHolders(response[0]);
           setAttribs(response[1]);
         }
@@ -55,20 +56,29 @@ const Gallery = () => {
     }
 
     fetchAllPlayers();
-    
+
     return () => {
       isMounted = false;
     };
   }, []);
 
 
-  const showCharacter = (attrib) => {
+  const showCharacter = (addr, attrib) => {
     if (!attrib) return <></>;
     return (
       <>
-        <h2 key={uuid()}>NAME: {attrib?.name}</h2>
+        {/* <h2 key={uuid()}>NAME: {attrib?.name}</h2>
         <h5 key={uuid()}>TOKENID: {attrib?.tokenId}</h5>
-        <img className="gallery-image" alt="" src={`https://ipfs.io/ipfs/${attrib?.imageURI}`} />
+        <img className="gallery-image" alt="" src={`https://ipfs.io/ipfs/${attrib?.imageURI}`} /> */}
+
+        <div className="nft-card">
+          <h2>{attrib?.name}</h2>
+          <h3>#{attrib?.tokenId}</h3> 
+          <img alt="" src={`https://ipfs.io/ipfs/${attrib?.imageURI}`} />
+          <h4 className="owner">{addr}</h4>
+        </div>
+
+
       </>
     );
   }
@@ -76,22 +86,23 @@ const Gallery = () => {
   return (
     <div className="gallery-main-container">
       <h2 className="gallery-header">All players</h2>
+      <div className="break"></div>
       <div className="gallery-container">
-        <div></div>
-        <div>
           {holders.map((hld, idx) => {
             return (
-              <ul key={`${uuid()}`}>
-                <li key={uuid()}>
-                  <h2 key={`HOLDER${uuid()}`}>HOLDER ({idx}): {hld.toString()}</h2>
-                </li>
-                <li key={uuid()}>
-                  {showCharacter(attribs[idx])}
-                </li>
-              </ul>
+              // <ul key={`${uuid()}`}>
+              //   <li key={uuid()}>
+              //     <h2 key={`HOLDER${uuid()}`}>HOLDER ({idx}): {hld.toString()}</h2>
+              //   </li>
+              //   <li key={uuid()}>
+                  
+              //   </li>
+              // </ul>
+              <>
+                {showCharacter(holders[idx], attribs[idx])}
+              </>
             );
           })}
-        </div>
       </div>
     </div>
   );
