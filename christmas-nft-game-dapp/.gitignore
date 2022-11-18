@@ -125,3 +125,5 @@ Cargo.lock
 deploy-address.txt
 
 artifacts
+build
+contracts/cache/solidity-files-cache.json

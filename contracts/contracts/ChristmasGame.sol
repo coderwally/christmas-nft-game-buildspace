@@ -44,7 +44,7 @@ contract ChristmasGame is ERC721 {
         uint256 tokenId,
         uint256 characterIndex
     );
-    event AttackComplete(address sender, uint newBossHp, uint newPlayerHp);
+    event AttackComplete(address sender, uint newBossHp, uint newPlayerHp, uint playerAttackResult, uint bossAttackResult);
 
     BigBoss public bigBoss;
 
@@ -149,7 +149,7 @@ contract ChristmasGame is ERC721 {
                 charAttributes.name,
                 " -- NFT #: ",
                 Strings.toString(_tokenId),
-                '", "description": "This is an NFT that lets people play in the game Christmas Joy Spreader!", "image": "',
+                '", "description": "This is an NFT that lets people play in the game Christmas Joy Spreader!", "image": "ipfs://',
                 charAttributes.imageURI,
                 '", "attributes": [ { "trait_type": "Joy Points", "value": ',
                 strJoyPoints,
@@ -174,16 +174,15 @@ contract ChristmasGame is ERC721 {
             uint(
                 keccak256(
                     abi.encodePacked(
-                        block.timestamp, // an alias for 'block.timestamp'
-                        msg.sender, // your address
+                        block.timestamp, 
+                        msg.sender, 
                         randNonce
                     )
                 )
-            ) % _modulus; // modulo using the _modulus argument
+            ) % _modulus; 
     }
 
     function attackBoss() public {
-        // Get the state of the player's NFT.
         uint256 nftTokenIdOfPlayer = nftHolders[msg.sender];
         CharacterAttributes storage player = nftHolderAttributes[
             nftTokenIdOfPlayer
@@ -214,12 +213,16 @@ contract ChristmasGame is ERC721 {
             "Error: boss must have JP to attack character."
         );
 
+        uint actionResultPlayer = 0;
+        uint actionResultBoss = 0;
+
         // Allow player to attack boss.
         if (bigBoss.joyPoints < player.attackDamage) {
             bigBoss.joyPoints = 0;
             console.log("The boss is dead!");
+            actionResultPlayer = 3;
         } else {
-            if (randomInt(100) > 25) {
+            if (randomInt(100) > 66) {  // 66% chance of succeeding
                 bigBoss.joyPoints = bigBoss.joyPoints - player.attackDamage;
                 console.log(
                     "%s attacked boss %s. New boss JP: %s",
@@ -227,8 +230,10 @@ contract ChristmasGame is ERC721 {
                     bigBoss.name,
                     bigBoss.joyPoints
                 );
+                actionResultPlayer = 1;
             } else {
                 console.log("%s missed!\n", player.name);
+                actionResultPlayer = 2;
             }
         }
 
@@ -236,8 +241,9 @@ contract ChristmasGame is ERC721 {
         if (player.joyPoints < bigBoss.attackDamage) {
             player.joyPoints = 0;
             console.log("The player is dead!");
+            actionResultBoss = 3;
         } else {
-            if (randomInt(100) > 75) {
+            if (randomInt(100) > 50) {  //50% chance of succeeding
                 player.joyPoints = player.joyPoints - bigBoss.attackDamage;
                 console.log(
                     "Boss %s attacked player %s. New player JP: %s\n",
@@ -245,12 +251,14 @@ contract ChristmasGame is ERC721 {
                     player.name,
                     player.joyPoints
                 );
+                actionResultBoss = 1;
             } else {
                 console.log("Boss %s missed!\n", bigBoss.name);
+                actionResultBoss = 2;
             }
         }
 
-        emit AttackComplete(msg.sender, bigBoss.joyPoints, player.joyPoints);
+        emit AttackComplete(msg.sender, bigBoss.joyPoints, player.joyPoints, actionResultPlayer, actionResultBoss);
     }
 
     function checkIfUserHasNFT()
