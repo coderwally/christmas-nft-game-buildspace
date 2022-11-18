@@ -1,3 +1,14 @@
+const loopThruHolders = async (contract) => {
+  console.log("*** LOOP THRU HOLDERS ***");
+  let holderCount = await contract.nftHolderCount();
+  console.log(`Current NFT holder count: ${holderCount}`);
+
+  let players = await contract.getAllPlayers();
+  console.log(players);
+
+  console.log("*** END OF LOOP ***");
+};
+
 const main = async () => {
   const gameContractFactory = await hre.ethers.getContractFactory(
     "ChristmasGame"
@@ -24,17 +35,31 @@ const main = async () => {
 
   let txn;
 
-  let returnedTokenUri = await gameContract.tokenURI(1);
-  console.log("Token URI:", returnedTokenUri);
+  //let returnedTokenUri = await gameContract.tokenURI(1);
+  //console.log("Token URI:", returnedTokenUri);
+
+  //let holderCount = await gameContract.nftHolderCount();
+  //console.log(`Current NFT holder count: ${holderCount}`);
 
   txn = await gameContract.mintCharacterNFT(0);
   await txn.wait();
 
+  await loopThruHolders(gameContract);
+
+  //holderCount = await gameContract.nftHolderCount();
+  //console.log(`Current NFT holder count: ${holderCount}`);
+
+  //const holders = await gameContract.nftHolderAddresses(0);
+  //console.log(holders);
+
+  /* ATTACKS */
+  /*
   txn = await gameContract.attackBoss();
   await txn.wait();
 
   txn = await gameContract.attackBoss();
   await txn.wait();
+  */
 };
 
 const runMain = async () => {

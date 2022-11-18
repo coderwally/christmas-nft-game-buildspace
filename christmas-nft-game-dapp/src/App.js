@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import twitterLogo from "./assets/twitter-logo.svg";
 import "./App.css";
-import SelectCharacter from "./Components/SelectCharacter";
+//import SelectCharacter from "./Components/SelectCharacter";
 import { CONTRACT_ADDRESS, transformCharacterData } from "./constants";
 import christmasGameContract from "./utils/ChristmasGame.json";
 import { ethers } from "ethers";
-import Arena from "./Components/Arena";
+//import Arena from "./Components/Arena";
+import Gallery from "./Components/Gallery";
 import LoadingIndicator from "./Components/LoadingIndicator";
 
 const TWITTER_HANDLE = "_buildspace";
@@ -66,8 +67,10 @@ const App = () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const { chainId } = await provider.getNetwork();
 
+    console.log(`Detected Chain ID: ${chainId}`);
+
     try {
-      if (chainId !== 80001) {
+      if (chainId !== 80001 && chainId !== 886688) {
         alert("Please connect to Polygon Mumbai!");
       }
     } catch (error) {
@@ -92,7 +95,10 @@ const App = () => {
         signer
       );
 
+      
+
       const characterNFT = await gameContract.checkIfUserHasNFT();
+
       if (characterNFT.name) {
         console.log("User has character NFT");
         setCharacterNFT(transformCharacterData(characterNFT));
@@ -108,6 +114,9 @@ const App = () => {
   }, [currentAccount]);
 
   const renderContent = () => {
+
+    
+
     if (isLoading) {
       return <LoadingIndicator />;
     }
@@ -134,10 +143,14 @@ const App = () => {
        * Scenario #2
        */
     } else if (currentAccount && !characterNFT) {
-      return <SelectCharacter setCharacterNFT={setCharacterNFT} />;
+      // return <SelectCharacter setCharacterNFT={setCharacterNFT} />;
+      return <Gallery />;
     } else if (currentAccount && characterNFT) {
       return (
-        <Arena characterNFT={characterNFT} setCharacterNFT={setCharacterNFT} />
+        <>
+        <Gallery />
+        {/* <Arena characterNFT={characterNFT} setCharacterNFT={setCharacterNFT} /> */}
+        </>
       );
     }
   };
