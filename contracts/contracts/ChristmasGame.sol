@@ -22,6 +22,7 @@ contract ChristmasGame is ERC721 {
         uint joyPoints;
         uint maxJoyPoints;
         uint attackDamage;
+        uint tokenId;
     }
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
@@ -94,7 +95,8 @@ contract ChristmasGame is ERC721 {
                     imageURI: characterImageURIs[i],
                     joyPoints: characterJoyPoints[i],
                     maxJoyPoints: characterJoyPoints[i],
-                    attackDamage: characterAttackDmg[i]
+                    attackDamage: characterAttackDmg[i],
+                    tokenId: 0
                 })
             );
 
@@ -123,7 +125,8 @@ contract ChristmasGame is ERC721 {
             imageURI: defaultCharacters[_characterIndex].imageURI,
             joyPoints: defaultCharacters[_characterIndex].joyPoints,
             maxJoyPoints: defaultCharacters[_characterIndex].maxJoyPoints,
-            attackDamage: defaultCharacters[_characterIndex].attackDamage
+            attackDamage: defaultCharacters[_characterIndex].attackDamage,
+            tokenId: newItemId
         });
 
         console.log(
