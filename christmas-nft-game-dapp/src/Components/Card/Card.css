@@ -1,0 +1,37 @@
+.nft-card { 
+    color:black;
+    background-color: rgb(230, 230, 196);
+    width:250px;
+    border-radius: 10px;
+    min-height:320px;
+    margin:10px;
+    padding:10px 0px 14px 0px;
+  }
+  
+  .nft-card img, h2, h3 {
+    margin: 0;
+  }
+  
+  .nft-card img{ 
+    width:90%;
+    border-radius:5px;
+  }
+  
+  .nft-card h2 {
+    padding:0;
+  }
+  
+  .nft-card .owner {
+    font-size: 0.6em;
+    flex-grow:1;
+    margin:0;
+  }
+  
+  .nft-card .owner-label {
+    font-size: 0.6em;
+    margin:0;
+  }
+  
+  .nft-card h3 {
+    padding:0;
+  }

@@ -53,7 +53,6 @@ const Arena = ({ characterNFT, setCharacterNFT }) => {
   useEffect(() => {
     const fetchBoss = async () => {
       const bossTxn = await gameContract.getBigBoss();
-      console.log("Boss:", bossTxn);
       setBoss(transformCharacterData(bossTxn));
     };
 
@@ -98,7 +97,10 @@ const Arena = ({ characterNFT, setCharacterNFT }) => {
           <div className={`boss-content ${attackState}`}>
             <h2>🔥 {boss.name} 🔥</h2>
             <div className="image-content">
-              <img src={`https://ipfs.io/ipfs/${boss.imageURI}`} alt={`Boss ${boss.name}`} />
+              <img
+                src={`https://ipfs.io/ipfs/${boss.imageURI}`}
+                alt={`Boss ${boss.name}`}
+              />
               <div className="health-bar">
                 <progress value={boss.joyPoints} max={boss.maxJoyPoints} />
                 <p>{`${boss.joyPoints} / ${boss.maxJoyPoints} Joy Points`}</p>

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import twitterLogo from "./assets/twitter-logo.svg";
 import "./App.css";
-//import SelectCharacter from "./Components/SelectCharacter";
+import SelectCharacter from "./Components/SelectCharacter";
 import { CONTRACT_ADDRESS, transformCharacterData } from "./constants";
 import christmasGameContract from "./utils/ChristmasGame.json";
 import { ethers } from "ethers";
-//import Arena from "./Components/Arena";
+import Arena from "./Components/Arena";
 import Gallery from "./Components/Gallery";
 import LoadingIndicator from "./Components/LoadingIndicator";
 
@@ -95,8 +95,6 @@ const App = () => {
         signer
       );
 
-      
-
       const characterNFT = await gameContract.checkIfUserHasNFT();
 
       if (characterNFT.name) {
@@ -114,9 +112,6 @@ const App = () => {
   }, [currentAccount]);
 
   const renderContent = () => {
-
-    
-
     if (isLoading) {
       return <LoadingIndicator />;
     }
@@ -143,13 +138,20 @@ const App = () => {
        * Scenario #2
        */
     } else if (currentAccount && !characterNFT) {
-      // return <SelectCharacter setCharacterNFT={setCharacterNFT} />;
-      return <Gallery />;
+      return (
+        <>
+          <SelectCharacter setCharacterNFT={setCharacterNFT} />
+          <Gallery />
+        </>
+      );
     } else if (currentAccount && characterNFT) {
       return (
         <>
-        <Gallery />
-        {/* <Arena characterNFT={characterNFT} setCharacterNFT={setCharacterNFT} /> */}
+          <Arena
+            characterNFT={characterNFT}
+            setCharacterNFT={setCharacterNFT}
+          />
+          <Gallery />
         </>
       );
     }

@@ -4,13 +4,16 @@
   align-items: center;
   margin: auto;
   color: white;
+  background-color: rgb(2, 59, 31);
 }
 
 .arena-container .boss-container {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  margin-bottom: 50px;
+  margin-bottom: 80px;
+  background-color:purple; /*TODO REMOVE*/
+  min-height:500px;
 }
 
 .boss-container .boss-content {
@@ -29,22 +32,27 @@
   );
   background-size: 600% 600%;
   animation: gradient-animation 8s ease infinite;
-  margin-bottom: 25px;
+  /* margin-bottom: 25px; */  
+  margin:0;
+  padding:0;
+
+
 }
 
 .boss-content h2 {
   margin: 0;
-  padding: 5px 0 10px 0;
+  padding: 0;
 }
 
 .boss-content .image-content,
 .player .image-content {
   position: relative;
+  display: flex;
 }
 
 .boss-content .image-content img {
-  width: 350px;
-  height: 300px;
+  width: 250px;
+  height: 320px;
   border-radius: 10px;
   object-fit: cover;
 }
@@ -53,8 +61,10 @@
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 100%;
+  /* width: 100%; */
+  width:250px;
   height: 30px;
+  background-color:yellow;
 }
 
 .health-bar progress[value] {
@@ -66,8 +76,7 @@
 
 .health-bar progress[value]::-webkit-progress-bar {
   background-color: #e5652e;
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
+  border-radius:10px;
   overflow: hidden;
 }
 
@@ -80,20 +89,29 @@
   width: 100%;
   font-weight: bold;
   color: black;
-  bottom: -10px;
+  background-color:red;
 }
 
 .arena-container .players-container {
-  width: 100%;
+  width: 50%;
   height: 100%;
   display: flex;
   justify-content: space-around;
+}
+
+.arena-container .boss-main-container {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  background-color:rgb(110, 134, 241); /*TODO REMOVE*/
 }
 
 .players-container .player {
   display: flex;
   flex-direction: column;
   max-height: 80%;
+  min-height:320px;
   padding: 10px;
   border-radius: 10px;
   background-color: gray;
@@ -122,7 +140,7 @@
   display: flex;
   align-items: center;
   background-color: #b12a5b;
-  border-radius: 8px;
+  border-radius: 10px;
   margin: 5px;
   padding: 10px;
   font-size: 18px;
@@ -290,6 +308,7 @@
   animation: fadein 0.5s, expand 0.5s 0.5s, stay 3s 1s, shrink 0.5s 4s,
     fadeout 0.5s 4.5s;
 }
+
 
 @-webkit-keyframes fadein {
   from {
