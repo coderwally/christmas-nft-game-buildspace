@@ -5,7 +5,8 @@ import christmasGame from "../../utils/ChristmasGame.json";
 import "./Gallery.css";
 
 import uuid from "react-uuid";
-import Card from "../Card";
+import TokenCard from "../TokenCard";
+import { shouldShowFallbackImage } from "@chakra-ui/react";
 //import LoadingIndicator from "../LoadingIndicator";
 
 const Gallery = () => {
@@ -62,26 +63,19 @@ const Gallery = () => {
             ? `https://ipfs.io/ipfs/${attribs[idx]?.imageURI}`
             : "";
 
-          //{name, tokenId, jp, maxJp, imageURI, owner}
-          /*
-            <h2>{attrib?.name}</h2>
-            <h3>NFT #{attrib?.tokenId?.toNumber()}</h3>
-            <h4 className="score">
-              {attrib?.joyPoints?.toNumber()} / {attrib?.maxJoyPoints?.toNumber()}
-            </h4>
-            <img alt="" src={`https://ipfs.io/ipfs/${attrib?.imageURI}`} />
-            <h4 className="owner-label">OWNER:</h4>
-            <h4 className="owner">{addr}</h4>*/
+          const displayOwner = `${hld?.substring(0, 6)}....${hld?.slice(-6)}`;
 
           return (
             <div key={uuid()}>
-              <Card
-                name={name}
-                tokenId={tokenId}
+              <TokenCard
+                title={`${name} (#${tokenId})`}
                 jp={jp}
                 maxJp={maxJp}
                 imageURI={imageURI}
-                owner={owner}
+                bgColor={"green.700"}
+                footerLabel={"OWNER"}
+                footerText={displayOwner}
+                showFooter={true}
               />
             </div>
           );
