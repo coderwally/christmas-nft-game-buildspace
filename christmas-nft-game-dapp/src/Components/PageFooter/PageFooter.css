@@ -1,17 +1,24 @@
 .footer-container {
     display: flex;
+    flex-direction: row;
     justify-content: center;
-    align-items: center;
-    padding-bottom: 30px;
   }
   
   .twitter-logo {
     width: 35px;
     height: 35px;
+    align-self: center;
+    opacity: 0.3;
   }
   
-  .footer-text {
+  .footer-link {
     color: white;
     font-size: 16px;
     font-weight: bold;
+    line-height:4em;
+  }
+
+  .footer-container {
+    background-color:#12181f;
+    
   }

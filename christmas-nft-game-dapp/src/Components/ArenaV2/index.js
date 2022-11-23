@@ -5,7 +5,7 @@ import christmasGame from "../../utils/ChristmasGame.json";
 import "./ArenaV2.css";
 import LoadingIndicator from "../LoadingIndicator";
 import TokenCard from "../TokenCard";
-import { Button, Flex, Heading } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, SimpleGrid } from "@chakra-ui/react";
 
 const ArenaV2 = ({ characterNFT, setCharacterNFT }) => {
   const [gameContract, setGameContract] = useState(null);
@@ -91,20 +91,21 @@ const ArenaV2 = ({ characterNFT, setCharacterNFT }) => {
       return `${name} (#${tokenId})`;
     }
     return `${name}`;
-  }
+  };
 
   return (
-    <Flex className="arena-container" justifyContent={'space-evenly'} >
-      {/* {boss && characterNFT && (
-        <div id="toast" className={showToast ? "show" : ""}>
-          <div id="desc">{`💥 ${boss.name} was hit for ${characterNFT.attackDamage}!`}</div>
-        </div>
-      )} */}
-
-      <Flex flexGrow={2} justifyContent={'flex-end'} bg={'pink'} flexDir={'column'}>
-      {characterNFT && (
-        <>
-            <Heading color={'white'} size={'lg'} py={2} border={'1px dashed red'}>Your Character</Heading>
+    <SimpleGrid columns={3}>
+      <Box>
+        {characterNFT && (
+          <Flex
+            display={"flex"}
+            flexDir={"column"}
+            alignItems={"center"}
+            justifyContent={"center"}
+          >
+            <Heading color={"white"} size={"lg"} py={2}>
+              Your Character
+            </Heading>
             <TokenCard
               title={getTitle(characterNFT.name, characterNFT.tokenId)}
               imageURI={`https://ipfs.io/ipfs/${characterNFT.imageURI}`}
@@ -112,38 +113,40 @@ const ArenaV2 = ({ characterNFT, setCharacterNFT }) => {
               maxJp={characterNFT.maxJoyPoints}
               bgColor={"gray"}
               showFooter={true}
-              footerLabel={"Attack Damage"}
+              footerLabel={"🌟 Attack Damage 🌟"}
               footerText={characterNFT.attackDamage}
             />
-        </>
-      )}
-      </Flex>
-
-      <Flex flexGrow={1}>
-      {boss && (
-        <Flex alignItems={'center'}>
-          <Button onClick={runAttackAction} colorScheme={"orange"}>
+          </Flex>
+        )}
+      </Box>
+      <Box alignItems={"center"} justifyContent={"flex-start"} display={"flex"}>
+        {boss && (
+          <Button onClick={runAttackAction} colorScheme={"pink"} m={"auto"}>
             {`💥 Attack ${boss.name}`}
           </Button>
-        </Flex>
-      )}
-      </Flex>
-
-    <Flex flexGrow={2}>
-      {boss && (
-        <div className="boss-container">
-          <Heading color={'white'} size={'lg'} py={2}>Boss</Heading>
-          <TokenCard
-            title={boss.name}
-            imageURI={`https://ipfs.io/ipfs/${boss.imageURI}`}
-            jp={boss.joyPoints}
-            maxJp={boss.maxJoyPoints}
-            bgColor={"red.700"}
-          />
-        </div>
-      )}
-      </Flex>
-    </Flex>
+        )}
+      </Box>
+      <Box>
+        {boss && (
+          <Flex
+            flexDir={"column"}
+            alignItems={"center"}
+            justifyContent={"center"}
+          >
+            <Heading color={"white"} size={"lg"} py={2}>
+              Boss
+            </Heading>
+            <TokenCard
+              title={boss.name}
+              imageURI={`https://ipfs.io/ipfs/${boss.imageURI}`}
+              jp={boss.joyPoints}
+              maxJp={boss.maxJoyPoints}
+              bgColor={"red.700"}
+            />
+          </Flex>
+        )}
+      </Box>
+    </SimpleGrid>
   );
 };
 

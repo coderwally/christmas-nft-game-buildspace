@@ -54,13 +54,12 @@ const Gallery = () => {
       <div className="break"></div>
       <div className="gallery-container">
         {holders.map((hld, idx) => {
-          const owner = hld;
           const name = attribs[idx]?.name;
           const tokenId = attribs[idx]?.tokenId?.toNumber();
           const jp = attribs[idx]?.joyPoints?.toNumber();
           const maxJp = attribs[idx]?.maxJoyPoints?.toNumber();
           const imageURI = attribs[idx]?.imageURI
-            ? `https://ipfs.io/ipfs/${attribs[idx]?.imageURI}`
+            ? `https://via0.com/ipfs/${attribs[idx]?.imageURI}`
             : "";
 
           const displayOwner = `${hld?.substring(0, 6)}....${hld?.slice(-6)}`;

@@ -110,7 +110,7 @@ const App = () => {
     } else if (currentAccount && !characterNFT) {
       return (
         <>
-          {/* <SelectCharacter setCharacterNFT={setCharacterNFT} /> */}
+          <SelectCharacter setCharacterNFT={setCharacterNFT} />
           <Gallery />
         </>
       );
@@ -135,9 +135,7 @@ const App = () => {
             <PageHeader />
           </div>
           <div className="content-container">{renderContent()}</div>
-          <div className="footer-container">
-            <PageFooter />
-          </div>
+          <PageFooter />
         </div>
       </div>
     </ChakraProvider>

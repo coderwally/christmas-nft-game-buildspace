@@ -14,17 +14,14 @@
 
 .header-container {
   padding: 10px 0px;
-  background-color:rgb(51, 102, 85);
+  background-color:#0f3b16;
 }
 
 .content-container {
-  border:1px dashed red;
   height:50%;
 }
 
-.footer-container {
-  background-color: orange;
-}
+
 
 .cta-button {
   height: 45px;

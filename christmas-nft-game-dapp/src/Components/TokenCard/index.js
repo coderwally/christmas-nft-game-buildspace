@@ -7,6 +7,7 @@ import {
   Text,
   Image,
   Progress,
+  Heading,
 } from "@chakra-ui/react";
 
 const TokenCard = ({
@@ -28,8 +29,8 @@ const TokenCard = ({
       minH={"350px"}
       borderRadius={"12px"}
     >
-      <CardHeader p={1} fontSize={"1.2rem"} fontWeight={"bold"}>
-        <Text>{title}</Text>
+      <CardHeader p={1} fontSize={"1.3rem"} fontWeight={"bold"}>
+        <Heading size="lg">{title}</Heading>
         {subTitle ? <Text>{subTitle}</Text> : ""}
       </CardHeader>
       <CardBody px={2} py={1}>
@@ -48,10 +49,8 @@ const TokenCard = ({
         </Text>
       </CardBody>
       {showFooter ? (
-        <CardFooter flexDir={"column"} fontSize={"0.7rem"}>
-          <Text fontWeight={"bold"} fontStyle={"italic"}>
-            {footerLabel}
-          </Text>
+        <CardFooter flexDir={"column"}>
+          <Text>{footerLabel}</Text>
           <Text>{footerText}</Text>
         </CardFooter>
       ) : (
