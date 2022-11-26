@@ -3,34 +3,33 @@ import { ethers } from "ethers";
 import { CONTRACT_ADDRESS, transformCharacterData } from "../../constants";
 import christmasGame from "../../utils/ChristmasGame.json";
 import "./ArenaV2.css";
-import LoadingIndicator from "../LoadingIndicator";
 import TokenCard from "../TokenCard";
 import { Box, Button, Flex, Heading, SimpleGrid } from "@chakra-ui/react";
 
 const ArenaV2 = ({ characterNFT, setCharacterNFT }) => {
   const [gameContract, setGameContract] = useState(null);
   const [boss, setBoss] = useState(null);
-  const [attackState, setAttackState] = useState("");
-  const [showToast, setShowToast] = useState(false);
+  //const [attackState, setAttackState] = useState("");
+  //const [showToast, setShowToast] = useState(false);
 
   const runAttackAction = async () => {
     try {
       if (gameContract) {
-        setAttackState("attacking");
+        //setAttackState("attacking");
         console.log("Attacking boss...");
         const attackTxn = await gameContract.attackBoss();
         await attackTxn.wait();
         console.log("attackTxn:", attackTxn);
-        setAttackState("hit");
+        //setAttackState("hit");
 
-        setShowToast(true);
+        //setShowToast(true);
         setTimeout(() => {
-          setShowToast(false);
+          //setShowToast(false);
         }, 5000);
       }
     } catch (error) {
       console.error("Error attacking boss:", error);
-      setAttackState("");
+      //setAttackState("");
     }
   };
 

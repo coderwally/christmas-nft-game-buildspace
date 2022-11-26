@@ -4,7 +4,7 @@ import { ethers } from "ethers";
 import { CONTRACT_ADDRESS, transformCharacterData } from "../../constants";
 import christmasGame from "../../utils/ChristmasGame.json";
 import "./SelectCharacter.css";
-import LoadingIndicator from "../LoadingIndicator";
+//import LoadingIndicator from "../LoadingIndicator";
 import Motto from "../Motto";
 
 const SelectCharacter = ({ setCharacterNFT }) => {

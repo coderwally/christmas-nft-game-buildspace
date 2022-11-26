@@ -6,8 +6,6 @@ import "./Gallery.css";
 
 import uuid from "react-uuid";
 import TokenCard from "../TokenCard";
-import { shouldShowFallbackImage } from "@chakra-ui/react";
-//import LoadingIndicator from "../LoadingIndicator";
 
 const Gallery = () => {
   const [holders, setHolders] = useState([]);
