@@ -52,8 +52,9 @@ const App = () => {
     console.log(`Detected Chain ID: ${chainId}`);
 
     try {
-      if (chainId !== 80001 && chainId !== 886688) {
-        alert("Please connect to Polygon Mumbai!");
+      //if (chainId !== 80001 && chainId !== 886688) {
+      if (chainId !== 5 && chainId !== 886688) {
+        alert("Please connect to Goerli!");
       }
     } catch (error) {
       console.log(error);
