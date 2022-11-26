@@ -65,6 +65,9 @@ const App = () => {
     setIsLoading(true);
     checkNetwork();
     checkIfWalletIsConnected();
+
+    console.log('CONTRACT ON LOAD:');
+    console.log(CONTRACT_ADDRESS);
   }, []);
 
   useEffect(() => {
