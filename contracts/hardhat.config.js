@@ -53,6 +53,6 @@ module.exports = {
   },  
 
   etherscan: {
-    apiKey: POLYGONSCAN_API_KEY,
+    apiKey: ETHERSCAN_API_KEY,
   },    
 };

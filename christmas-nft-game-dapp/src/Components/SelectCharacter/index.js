@@ -4,7 +4,8 @@ import { ethers } from "ethers";
 import { CONTRACT_ADDRESS, transformCharacterData } from "../../constants";
 import christmasGame from "../../utils/ChristmasGame.json";
 import "./SelectCharacter.css";
-import LoadingIndicator from "../LoadingIndicator";
+//import LoadingIndicator from "../LoadingIndicator";
+import Motto from "../Motto";
 
 const SelectCharacter = ({ setCharacterNFT }) => {
   const [characters, setCharacters] = useState([]);
@@ -98,7 +99,7 @@ const SelectCharacter = ({ setCharacterNFT }) => {
           <p>{character.name}</p>
         </div>
         <img
-          src={`https://ipfs.io/ipfs/${character.imageURI}`}
+          src={`https://dweb.link/ipfs/${character.imageURI}`}
           alt={character.name}
         />
         <button
@@ -111,21 +112,12 @@ const SelectCharacter = ({ setCharacterNFT }) => {
 
   return (
     <div className="select-character-container">
-      <h2>Mint Your Hero. Choose wisely.</h2>
+      
+      {/* <h2 className="motto">Mint Your Christmas Hero. Choose wisely and Happy Holidays!</h2> */}
+      <Motto isMinting={mintingCharacter} />
+
       {characters.length > 0 && (
         <div className="character-grid">{renderCharacters()}</div>
-      )}
-      {mintingCharacter && (
-        <div className="loading">
-          <div className="indicator">
-            <LoadingIndicator />
-            <p>Minting In Progress...</p>
-          </div>
-          <img
-            src="https://ipfs.io/ipfs/bafybeicrvxd4domji3p7hzbysskaev65vr7rriewf3jqmgnjpbfk44b4cm"
-            alt="Minting loading indicator"
-          />
-        </div>
       )}
     </div>
   );

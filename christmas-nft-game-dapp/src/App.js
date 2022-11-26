@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
-import twitterLogo from "./assets/twitter-logo.svg";
-import "./App.css";
+import { ChakraProvider } from "@chakra-ui/react";
+
+import "./AppV2.css";
 import SelectCharacter from "./Components/SelectCharacter";
 import { CONTRACT_ADDRESS, transformCharacterData } from "./constants";
 import christmasGameContract from "./utils/ChristmasGame.json";
 import { ethers } from "ethers";
-import Arena from "./Components/Arena";
 import Gallery from "./Components/Gallery";
 import LoadingIndicator from "./Components/LoadingIndicator";
-
-const TWITTER_HANDLE = "_buildspace";
-const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
+import PageFooter from "./Components/PageFooter";
+import PageHeader from "./Components/PageHeader";
+import ConnectWallet from "./Components/ConnectWallet";
+import ArenaV2 from "./Components/ArenaV2";
 
 const App = () => {
   const [currentAccount, setCurrentAccount] = useState(null);
@@ -44,25 +45,6 @@ const App = () => {
     setIsLoading(false);
   };
 
-  const connectWalletAction = async () => {
-    try {
-      const { ethereum } = window;
-
-      if (!ethereum) {
-        alert("Get MetaMask!");
-        return;
-      }
-
-      const accounts = await ethereum.request({
-        method: "eth_requestAccounts",
-      });
-
-      console.log("Connected", accounts[0]);
-      setCurrentAccount(accounts[0]);
-    } catch (error) {
-      console.log(error);
-    }
-  };
   const checkNetwork = async () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const { chainId } = await provider.getNetwork();
@@ -70,17 +52,22 @@ const App = () => {
     console.log(`Detected Chain ID: ${chainId}`);
 
     try {
-      if (chainId !== 80001 && chainId !== 886688) {
-        alert("Please connect to Polygon Mumbai!");
+      //if (chainId !== 80001 && chainId !== 886688) {
+      if (chainId !== 5 && chainId !== 886688) {
+        alert("Please connect to Goerli!");
       }
     } catch (error) {
       console.log(error);
     }
   };
+
   useEffect(() => {
     setIsLoading(true);
     checkNetwork();
     checkIfWalletIsConnected();
+
+    console.log('CONTRACT ON LOAD:');
+    console.log(CONTRACT_ADDRESS);
   }, []);
 
   useEffect(() => {
@@ -120,62 +107,44 @@ const App = () => {
      * Scenario #1
      */
     if (!currentAccount) {
-      return (
-        <div className="connect-wallet-container">
-          <img
-            src="https://media.giphy.com/media/Gpi6b9M5Sz62RM6uLZ/giphy.gif"
-            alt="Christmas Dog Gif"
-          />
-          <button
-            className="cta-button connect-wallet-button"
-            onClick={connectWalletAction}
-          >
-            Connect Wallet To Get Started
-          </button>
-        </div>
-      );
+      return <ConnectWallet setCurrentAccount={setCurrentAccount} />;
       /*
        * Scenario #2
        */
     } else if (currentAccount && !characterNFT) {
       return (
-        <>
+        <div className="content-subcontainer">
           <SelectCharacter setCharacterNFT={setCharacterNFT} />
+          <hr />
           <Gallery />
-        </>
+        </div>
       );
     } else if (currentAccount && characterNFT) {
       return (
-        <>
-          <Arena
+        <div className="content-subcontainer">
+          <ArenaV2
             characterNFT={characterNFT}
             setCharacterNFT={setCharacterNFT}
           />
+          <hr />
           <Gallery />
-        </>
+        </div>
       );
     }
   };
 
   return (
-    <div className="App">
-      <div className="container">
-        <div className="header-container">
-          <p className="header gradient-text">🎄 Christmas Joy Spreader 🎄</p>
-          <p className="sub-text">Team up to spread joy!!</p>
-          {renderContent()}
-        </div>
-        <div className="footer-container">
-          <img alt="Twitter Logo" className="twitter-logo" src={twitterLogo} />
-          <a
-            className="footer-text"
-            href={TWITTER_LINK}
-            target="_blank"
-            rel="noreferrer"
-          >{`built with @${TWITTER_HANDLE}`}</a>
+    <ChakraProvider>
+      <div className="App">
+        <div className="container2">
+          <div className="header-container">
+            <PageHeader />
+          </div>
+          <div className="content-container">{renderContent()}</div>
+          <PageFooter />
         </div>
       </div>
-    </div>
+    </ChakraProvider>
   );
 };
 

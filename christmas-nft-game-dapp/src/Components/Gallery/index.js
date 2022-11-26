@@ -5,8 +5,7 @@ import christmasGame from "../../utils/ChristmasGame.json";
 import "./Gallery.css";
 
 import uuid from "react-uuid";
-import Card from "../Card";
-//import LoadingIndicator from "../LoadingIndicator";
+import TokenCard from "../TokenCard";
 
 const Gallery = () => {
   const [holders, setHolders] = useState([]);
@@ -53,35 +52,27 @@ const Gallery = () => {
       <div className="break"></div>
       <div className="gallery-container">
         {holders.map((hld, idx) => {
-          const owner = hld;
           const name = attribs[idx]?.name;
           const tokenId = attribs[idx]?.tokenId?.toNumber();
           const jp = attribs[idx]?.joyPoints?.toNumber();
           const maxJp = attribs[idx]?.maxJoyPoints?.toNumber();
           const imageURI = attribs[idx]?.imageURI
-            ? `https://ipfs.io/ipfs/${attribs[idx]?.imageURI}`
+            ? `https://via0.com/ipfs/${attribs[idx]?.imageURI}`
             : "";
 
-          //{name, tokenId, jp, maxJp, imageURI, owner}
-          /*
-            <h2>{attrib?.name}</h2>
-            <h3>NFT #{attrib?.tokenId?.toNumber()}</h3>
-            <h4 className="score">
-              {attrib?.joyPoints?.toNumber()} / {attrib?.maxJoyPoints?.toNumber()}
-            </h4>
-            <img alt="" src={`https://ipfs.io/ipfs/${attrib?.imageURI}`} />
-            <h4 className="owner-label">OWNER:</h4>
-            <h4 className="owner">{addr}</h4>*/
+          const displayOwner = `${hld?.substring(0, 6)}....${hld?.slice(-6)}`;
 
           return (
             <div key={uuid()}>
-              <Card
-                name={name}
-                tokenId={tokenId}
+              <TokenCard
+                title={`${name} (#${tokenId})`}
                 jp={jp}
                 maxJp={maxJp}
                 imageURI={imageURI}
-                owner={owner}
+                bgColor={"green.700"}
+                footerLabel={"OWNER"}
+                footerText={displayOwner}
+                showFooter={true}
               />
             </div>
           );
