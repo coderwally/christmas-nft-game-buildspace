@@ -1,12 +1,11 @@
 
   .motto-container {
-    padding: 10px 1em;
-    margin:10px 0 20px;
     width:90%;
     line-height: 5em;
     display:flex;
     flex-direction: column;
     justify-content: center;
+    margin: 10px 0 20px;
   }
 
   .motto-container .red {
@@ -24,7 +23,6 @@
   .motto-container .minting {
     flex-direction: row;
     border-radius:10px;
-    width: 95%;
   }
 
   .motto-container h3 {

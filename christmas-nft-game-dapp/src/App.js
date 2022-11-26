@@ -109,20 +109,22 @@ const App = () => {
        */
     } else if (currentAccount && !characterNFT) {
       return (
-        <>
+        <div className="content-subcontainer">
           <SelectCharacter setCharacterNFT={setCharacterNFT} />
+          <hr />
           <Gallery />
-        </>
+        </div>
       );
     } else if (currentAccount && characterNFT) {
       return (
-        <>
+        <div className="content-subcontainer">
           <ArenaV2
             characterNFT={characterNFT}
             setCharacterNFT={setCharacterNFT}
           />
+          <hr />
           <Gallery />
-        </>
+        </div>
       );
     }
   };

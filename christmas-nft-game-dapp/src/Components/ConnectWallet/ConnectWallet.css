@@ -3,10 +3,15 @@
     flex-direction: column;
     margin: auto;
     max-width: 550px;
+    padding-top:20px;
   }
   
   .connect-wallet-container img {
-    padding-bottom: 20px;
+    border-radius:4px;
+  }
+
+  .connect-wallet-container .cta-button {
+    margin-top:20px;
   }
   
   .connect-wallet-button {

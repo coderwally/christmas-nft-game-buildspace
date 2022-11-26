@@ -19,9 +19,21 @@
 
 .content-container {
   height:50%;
+  margin-bottom:20px;
 }
 
+.content-subcontainer {
+  display:flex;
+  flex-direction: column;
+}
 
+.content-subcontainer hr {
+  border:0;
+  height: 2px;
+  background-color:rgb(41, 41, 41);
+  margin:10px 0;
+  
+}
 
 .cta-button {
   height: 45px;

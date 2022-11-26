@@ -12,6 +12,8 @@
 .gallery-header {
   flex:100%;
   margin-bottom:1.5em;
+  font-size:25px;
+  font-weight:bold;
 }
 
 

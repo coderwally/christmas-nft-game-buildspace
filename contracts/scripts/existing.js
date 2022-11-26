@@ -31,8 +31,8 @@ const main = async () => {
   txn = await gameContract.mintCharacterNFT(0);
   await txn.wait();
 
-  let hasNft = await gameContract.checkIfUserHasNFT();
-  console.log(`Has NFT: ${hasNft}`);
+  //let hasNft = await gameContract.checkIfUserHasNFT();
+  //console.log(`Has NFT: ${hasNft}`);
 
   let count = 0;
 
