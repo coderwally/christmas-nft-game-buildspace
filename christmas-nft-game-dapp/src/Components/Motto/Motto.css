@@ -1,0 +1,43 @@
+
+  .motto-container {
+    padding: 10px 1em;
+    margin:10px 0 20px;
+    width:90%;
+    line-height: 5em;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .motto-container .red {
+    background-color:#500508;
+  }
+
+  .motto-container .orange {
+    background-color:rgb(161, 103, 27);
+  }
+
+  .motto-container .motto {
+    border-radius:10px;
+  }
+
+  .motto-container .minting {
+    flex-direction: row;
+    border-radius:10px;
+    width: 95%;
+  }
+
+  .motto-container h3 {
+    font-size: 1.8em;
+    font-weight: 500;
+  }
+
+  .motto-container .minting {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .motto-container .minting h3 {
+    padding-left:20px;
+  }

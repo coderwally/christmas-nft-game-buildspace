@@ -11,6 +11,8 @@
   "scripts": {
     "pretty": "npx prettier --write ./contracts/**/*.sol && npx prettier --write ./scripts/*.js",
     "build": "npm run pretty && npx hardhat compile",
-    "test": "npx hardhat run scripts/run.js"
+    "test": "npx hardhat run scripts/run.js",
+    "local": "npm run build && npx hardhat run scripts/deploy.js --network localhost",
+    "mumbai": "npm run build && npx hardhat run scripts/deploy.js --network mumbai"
   }
 }
