@@ -4,7 +4,6 @@ import { ethers } from "ethers";
 import { CONTRACT_ADDRESS, transformCharacterData } from "../../constants";
 import christmasGame from "../../utils/ChristmasGame.json";
 import "./SelectCharacter.css";
-//import LoadingIndicator from "../LoadingIndicator";
 import Motto from "../Motto";
 
 const SelectCharacter = ({ setCharacterNFT }) => {
@@ -47,23 +46,6 @@ const SelectCharacter = ({ setCharacterNFT }) => {
   }, []);
 
   useEffect(() => {
-    const getCharacters = async () => {
-      try {
-        console.log("Getting contract characters to mint");
-
-        const charactersTxn = await gameContract.getAllDefaultCharacters();
-        console.log("charactersTxn:", charactersTxn);
-
-        const characters = charactersTxn.map((characterData) =>
-          transformCharacterData(characterData)
-        );
-
-        setCharacters(characters);
-      } catch (error) {
-        console.error("Something went wrong fetching characters:", error);
-      }
-    };
-
     const onCharacterMint = async (sender, tokenId, characterIndex) => {
       console.log(
         `CharacterNFTMinted - sender: ${sender} tokenId: ${tokenId.toNumber()} characterIndex: ${characterIndex.toNumber()}`
@@ -80,11 +62,25 @@ const SelectCharacter = ({ setCharacterNFT }) => {
       }
     };
 
+    const getCharacters = async () => {
+      try {
+        console.log("Getting contract characters to mint");
+
+        const charactersTxn = await gameContract.getAllDefaultCharacters();
+        const characters = charactersTxn.map((characterData) =>
+          transformCharacterData(characterData)
+        );
+
+        setCharacters(characters);
+      } catch (error) {
+        console.error("Something went wrong fetching characters:", error);
+      }
+    };
+
     if (gameContract) {
       getCharacters();
       gameContract.on("CharacterNFTMinted", onCharacterMint);
     }
-
     return () => {
       if (gameContract) {
         gameContract.off("CharacterNFTMinted", onCharacterMint);
@@ -112,7 +108,6 @@ const SelectCharacter = ({ setCharacterNFT }) => {
 
   return (
     <div className="select-character-container">
-      
       {/* <h2 className="motto">Mint Your Christmas Hero. Choose wisely and Happy Holidays!</h2> */}
       <Motto isMinting={mintingCharacter} />
 

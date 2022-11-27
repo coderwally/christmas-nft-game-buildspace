@@ -1,5 +1,5 @@
 import LoadingIndicator from "../LoadingIndicator";
-import './Motto.css'
+import "./Motto.css";
 
 const Motto = ({ isMinting }) => {
   return (
@@ -11,9 +11,9 @@ const Motto = ({ isMinting }) => {
       )}
       {isMinting && (
         <div className="minting orange">
-            <LoadingIndicator />
-            <h3>Minting In Progress...</h3>
-          </div>
+          <LoadingIndicator />
+          <h3>Minting In Progress...</h3>
+        </div>
       )}
     </div>
   );
