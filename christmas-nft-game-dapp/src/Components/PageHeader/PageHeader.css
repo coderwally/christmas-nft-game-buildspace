@@ -1,11 +1,22 @@
+.header-parts {
+  color: white;
+}
+
 .header {
-    margin: 0;
-    font-size: 50px;
-    font-weight: bold;
-    color: white;
-  }
-  
-  .sub-text {
-    font-size: 25px;
-    color: white;
-  }
+  margin: 0;
+  font-size: 50px;
+  font-weight: bold;
+}
+
+.sub-text {
+  font-size: 25px;
+}
+
+.player {
+  font-size: 18px;
+  margin-top: 4px;
+}
+
+.addy {
+  color: rgb(165, 235, 177);
+}

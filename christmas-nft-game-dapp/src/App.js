@@ -181,7 +181,7 @@ const App = () => {
       <div className="App">
         <div className="container2">
           <div className="header-container">
-            <PageHeader />
+            <PageHeader currentAccount={currentAccount} />
           </div>
           <div className="content-container">
             {showNetworkWarning && (
